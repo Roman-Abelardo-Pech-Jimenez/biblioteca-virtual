@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Virtual Escolar</title>
+
+    <!-- Conecta el diseño CSS -->
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <header class="encabezado">
+    <div class="logo-biblioteca">
+        <span>📚</span>
+        <h2>Biblioteca Escolar</h2>
+    </div>
+
+    <nav class="navegacion">
+        <a href="#inicio">Inicio</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#acerca">Acerca de</a>
+    </nav>
+</header>
+
+
+    <header>
+        <h1>El Rincón del Saber</h1>
+        <p>Biblioteca Virtual Escolar</p>
+    </header>
+
+    <main>
+        <section class="bienvenida">
+            <section class="bienvenida" id="inicio"></section>
+            <div class="contenido-bienvenida">
+
+                <p class="subtitulo-bienvenida">
+                    BIBLIOTECA ESCOLAR
+                </p>
+
+                <h1>
+                    Un mundo de conocimiento a tu alcance
+                </h1>
+
+                <p>
+                    Explora nuestra colección de libros y materiales
+                    educativos. Aprende, consulta y descubre nuevos
+                    conocimientos.
+                </p>
+
+                <a href="#catalogo" class="boton-explorar">
+                    Explorar catálogo
+                </a>
+
+            </div>
+        </section>
+
+<section id="catalogo">
+    <h2>Catálogo de libros</h2>
+
+
+    <label for="buscador">Buscar por título, autor o categoría:</label>
+
+    <input
+        type="search"
+        id="buscador"
+        placeholder="Ej. Álgebra, Matemáticas..."
+    >
+    <div id="menu-categorias" class="menu-categorias"></div>
+
+    <div
+        class="contenedor-libros"
+        id="contenedor-libros"
+    ></div>
+    <section id="lector-libro" hidden>
+    <h2 id="titulo-lector">Lectura del libro</h2>
+
+    <button type="button" id="cerrar-lector">
+        Volver al catálogo
+    </button>
+
+    <iframe
+        id="visor-pdf"
+        title="Lector de PDF"
+        width="100%"
+        height="650"
+        style="border: none;">
+    </iframe>
+</section>
+
+
+    <p id="mensaje-resultados" aria-live="polite"></p>
+</section>
+<section class="acerca" id="acerca">
+
+    <div class="contenido-acerca">
+
+        <h2>Acerca de nuestra biblioteca</h2>
+
+        <p>
+            Nuestra biblioteca virtual es un espacio educativo
+            creado para facilitar el acceso al conocimiento y
+            promover el hábito de la lectura entre nuestra
+            comunidad escolar.
+        </p>
+
+        <p>
+            Aquí podrás encontrar libros y materiales de consulta
+            de diferentes áreas del conocimiento, disponibles
+            para su lectura y descarga.
+        </p>
+
+        <h3>Nuestro propósito</h3>
+
+        <p>
+            Fomentar el aprendizaje autónomo, la investigación
+            y el intercambio de conocimientos mediante el uso
+            de recursos digitales.
+        </p>
+
+    </div>
+
+</section>
+
+
+    </main>
+    <footer class="pie-pagina">
+
+    <div class="contenido-footer">
+
+        <div class="footer-info">
+            <h3>📚 Biblioteca Escolar</h3>
+            <p>
+                Un espacio digital para aprender,
+                consultar y compartir conocimientos.
+            </p>
+        </div>
+
+        <div class="footer-creditos">
+            <h4>Proyecto educativo</h4>
+            <p>
+                Desarrollado por la comunidad escolar.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="footer-final">
+        <p>
+            © 2026 Biblioteca Escolar.
+            Todos los derechos reservados.
+        </p>
+    </div>
+
+</footer>
+
+<script src="js/catalogo.js"></script>
+</body>
+</html>

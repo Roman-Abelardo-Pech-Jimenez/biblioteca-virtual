@@ -1,0 +1,86 @@
+[
+   {
+        "titulo": "Álgebra básica",
+        "autor": "Autor de ejemplo",
+        "categoria": "Matemáticas",
+        "descripcion": "Material introductorio para comprender las operaciones algebraicas, expresiones y ecuaciones básicas.",
+        "portada": "recursos/portadas/algebra_básica.jpg",
+        "archivos": [
+            {
+                "tipo": "PDF",
+                "ruta": "recursos/libros/algebra-basica.pdf"
+            },
+            {
+                "tipo": "DOCX",
+                "ruta": "recursos/libros/algebra-basica.docx"
+            },
+            {
+                "tipo": "PPTX",
+                "ruta": "recursos/libros/algebra-basica.pptx"
+            }
+        ]
+    },
+    {
+        "titulo": "Introducción a la informática",
+        "autor": "Autor de ejemplo",
+        "categoria": "Informática",
+        "descripcion": "Material introductorio para comprender la informática.",
+        "portada": "recursos/portadas/informatica.jpg",
+        "archivos": [
+            {
+                "tipo": "PDF",
+                "ruta": "recursos/libros/informatica.pdf"
+            },
+            {
+                "tipo": "DOCX",
+                "ruta": "recursos/libros/informatica.docx"
+            },
+            {
+                "tipo": "PPTX",
+                "ruta": "recursos/libros/informatica.pptx"
+            }
+        ]
+    },
+    {
+        "titulo": "El mundo de la lectura",
+        "autor": "Autor de ejemplo",
+        "categoria": "Literatura",
+        "descripcion": "Material introductorio para comprender la literatura.",
+        "portada": "recursos/portadas/literatura.jpg",
+        "archivos": [
+            {
+                "tipo": "PDF",
+                "ruta": "recursos/libros/literatura.pdf"
+            },
+            {
+                "tipo": "DOCX",
+                "ruta": "recursos/libros/literatura.docx"
+            },
+            {
+                "tipo": "PPTX",
+                "ruta": "recursos/libros/literatura.pptx"
+            }
+        ]
+    },
+    {
+        "titulo": "Ciencia para todos",
+        "autor": "Autor de ejemplo",
+        "categoria": "Ciencias",
+        "descripcion": "Material introductorio para comprender la ciencia.",
+        "portada": "recursos/portadas/ciencia.jpg",
+        "archivos": [
+            {
+                "tipo": "PDF",
+                "ruta": "recursos/libros/ciencia.pdf"
+            },
+            {
+                "tipo": "DOCX",
+                "ruta": "recursos/libros/ciencia.docx"
+            },
+            {
+                "tipo": "PPTX",
+                "ruta": "recursos/libros/ciencia.pptx"
+            }
+        ]
+    }
+]

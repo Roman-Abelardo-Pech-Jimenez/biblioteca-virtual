@@ -1,0 +1,540 @@
+/* Diseño general de la biblioteca */
+/*letras*/
+body {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif, sans-serif;
+    background-color: oklab(100% 0 -0.00011);
+    color: #ffffff;
+}
+
+/* Encabezado */
+header {
+    background-color:#193D36;
+    color: hsl(0, 14%, 95%);
+    text-align: center;
+    padding: 30px 15px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+    
+}
+
+header p {
+
+    margin-bottom: 0;
+    color: #a5abb4;
+}
+
+/* Contenido principal */
+main {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Secciones */
+section {
+    background-color: #193D36;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+/* Lista de categorías */
+li {
+    margin-bottom: 8px;
+}
+
+/* Adaptación a pantallas pequeñas */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 25px;
+    }
+}
+/* Organiza las tarjetas en filas */
+.contenedor-libros {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(220px, 1fr)
+    );
+    gap: 20px;
+}
+
+/* Diseño de cada tarjeta */
+.tarjeta-libro {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px #00000015;
+}
+
+/* Espacio destinado a la portada */
+.portada {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 60px;
+}
+
+/* Colores temporales para distinguir las portadas */
+.portada-matematicas {
+    background-color: #315b83;
+}
+
+.portada-informatica {
+    background-color: #365f54;
+}
+
+.portada-literatura {
+    background-color: #895b73;
+}
+
+/* Información del libro */
+.informacion-libro {
+    padding: 15px;
+}
+
+.informacion-libro h3 {
+    margin-top: 0;
+}
+
+.informacion-libro p {
+    font-size: 14px;
+    color: #161616;
+}
+/* Tamaño y apariencia de las portadas */
+.imagen-portada {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    display: block;
+    background-color: #f4f1ea;
+}
+/* Campo de búsqueda */
+#buscador {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+    padding: 12px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    border: 1px solid #b8c5bd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Indicaciones de resultados */
+#mensaje-resultados {
+    color: #555555;
+    font-size: 14px;
+}
+/*estilos para los botones*/
+.boton-libro {
+    display: inline-block;
+    margin: 8px 5px 0 0;
+    padding: 9px 14px;
+    background-color: #245c4f;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.boton-libro:hover {
+    background-color: #174438;
+}
+/* Presentación principal de la biblioteca */
+.bienvenida {
+    background: linear-gradient(
+        120deg,
+        #193D36,
+        #326B59
+    );
+
+    color: white;
+    padding: 65px 40px;
+    border-radius: 12px;
+    margin-bottom: 35px;
+}
+
+.contenido-bienvenida {
+    max-width: 700px;
+}
+
+.subtitulo-bienvenida {
+    font-size: 13px;
+    letter-spacing: 3px;
+    font-weight: bold;
+    color: #D9C99B;
+}
+
+.bienvenida h1 {
+    font-size: 36px;
+    margin: 15px 0;
+}
+
+.bienvenida p {
+    line-height: 1.7;
+}
+
+.boton-explorar {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 20px;
+    background-color: #E5D6AC;
+    color: #193D36;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.boton-explorar:hover {
+    background-color: #F2E8CE;
+}
+/* Menú de categorías */
+.menu-categorias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.boton-categoria {
+    padding: 9px 16px;
+    border: 1px solid #326B59;
+    border-radius: 20px;
+    background-color: white;
+    color: #326B59;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.boton-categoria:hover {
+    background-color: #E4EEE9;
+}
+
+.boton-categoria.activa {
+    background-color: #245C4F;
+    color: white;
+}
+/* Distribución general de las tarjetas */
+.contenedor-libros {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 25px;
+    margin-top: 25px;
+}
+
+/* Diseño individual de cada libro */
+.tarjeta-libro {
+    background-color: white;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Efecto al pasar el cursor */
+.tarjeta-libro:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.14);
+}
+
+/* Portada */
+.imagen-portada {
+    width: 100%;
+    height: 230px;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+/* Información */
+.informacion-libro h3 {
+    color: #193D36;
+    margin-bottom: 10px;
+}
+
+.informacion-libro p {
+    color: #555;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+/* Botones */
+.boton-libro {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #245C4F;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.boton-libro:hover {
+    background-color: #193D36;
+}
+/* Grupo de botones por formato */
+.grupo-archivo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+/* Ajustar el tamaño de los botones */
+.grupo-archivo .boton-libro {
+    font-size: 12px;
+    padding: 10px 5px;
+}
+
+.descripcion-libro {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+/* Encabezado principal */
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 30px;
+    background-color: #193D36;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+/* Logotipo */
+.logo-biblioteca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-biblioteca h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+/* Navegación */
+.navegacion {
+    display: flex;
+    gap: 25px;
+}
+
+.navegacion a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.navegacion a:hover {
+    color: #E5D6AC;
+}
+/* Sección Acerca de */
+.acerca {
+    background-color: #636963;
+    padding: 45px 35px;
+    border-radius: 12px;
+    margin-top: 45px;
+    margin-bottom: 30px;
+}
+
+.contenido-acerca {
+    max-width: 850px;
+    margin: auto;
+}
+
+.acerca h2 {
+    color: #143831;
+    margin-bottom: 20px;
+}
+
+.acerca h3 {
+    color: #285f4e;
+    margin-top: 25px;
+}
+
+.acerca p {
+    color: #f7f4f4;
+    line-height: 1.8;
+    text-align: justify;
+}
+/* Adaptación para celulares y tabletas */
+@media (max-width: 768px) {
+
+    /* Encabezado */
+    .encabezado {
+        flex-direction: column;
+        gap: 18px;
+        padding: 20px;
+    }
+
+    /* Menú */
+    .navegacion {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    /* Bienvenida */
+    .bienvenida {
+        padding: 40px 25px;
+    }
+
+    .bienvenida h1 {
+        font-size: 28px;
+    }
+
+    /* Catálogo */
+    .contenedor-libros {
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(190px, 1fr)
+        );
+        gap: 15px;
+    }
+
+    /* Sección acerca */
+    .acerca {
+        padding: 30px 20px;
+    }
+}
+@media (max-width: 480px) {
+
+    .contenedor-libros {
+        grid-template-columns: 1fr;
+    }
+
+    .tarjeta-libro {
+        max-width: 350px;
+        width: 100%;
+        box-sizing: border-box;
+        margin: auto;
+    }
+
+    .navegacion a {
+        font-size: 13px;
+    }
+
+    .grupo-archivo .boton-libro {
+        font-size: 11px;
+    }
+}
+/* Contenedor del lector */
+#lector-libro {
+    background-color: #F5F7F5;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 30px;
+}
+
+/* Título del documento */
+#titulo-lector {
+    color: #193D36;
+    margin-bottom: 20px;
+}
+
+/* Visor de documentos */
+#visor-pdf {
+    display: block;
+    width: 100%;
+    height: 650px;
+    border: 1px solid #D5DDD7;
+    border-radius: 8px;
+    background-color: white;
+}
+
+/* Botón para regresar al catálogo */
+#cerrar-lector {
+    padding: 10px 18px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #245C4F;
+    color: white;
+    cursor: pointer;
+}
+
+#cerrar-lector:hover {
+    background-color: #193D36;
+}
+
+/* Adaptación del lector a celulares */
+@media (max-width: 768px) {
+
+    #lector-libro {
+        padding: 15px;
+    }
+
+    #visor-pdf {
+        height: 500px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    #visor-pdf {
+        height: 400px;
+    }
+}
+/* Pie de página */
+.pie-pagina {
+    background-color: #193D36;
+    color: white;
+    padding: 35px 30px 15px;
+    margin-top: 45px;
+    border-radius: 10px;
+}
+
+.contenido-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    max-width: 1100px;
+    margin: auto;
+    padding-bottom: 25px;
+}
+
+.footer-info,
+.footer-creditos {
+    max-width: 400px;
+}
+
+.pie-pagina h3,
+.pie-pagina h4 {
+    color: #E5D6AC;
+}
+
+.pie-pagina p {
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.footer-final {
+    border-top: 1px solid rgba(255,255,255,0.25);
+    padding-top: 15px;
+    text-align: center;
+    font-size: 12px;
+}
+.contenido-footer {
+    flex-direction: column;
+    gap: 15px;
+}

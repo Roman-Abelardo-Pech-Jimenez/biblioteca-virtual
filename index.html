@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#087747">
+    <meta name="description" content="Biblioteca Virtual CONALEP: consulta, lee y descarga recursos educativos.">
+    <title>
+        Biblioteca Virtual CONALEP
+    </title>
+    <link rel="stylesheet" href="./estilos.css?v=2">
+</head>
+<body>
+<header class="encabezado">
+    <div class="barra contenedor-ancho">
+        <a class="marca" href="#inicio" aria-label="CONALEP Biblioteca Virtual">
+            <img
+            src="./recursos/logo.png"
+            alt="Logotipo CONALEP"
+            class="logo-conalep"
+            >
+            <span>
+                <strong>CONALEP</strong>
+                <small>BIBLIOTECA VIRTUAL</small>
+            </span>
+        </a>
+        <button class="menu-movil" id="menu-movil" 
+            type="button" aria-label="Abrir menú" 
+            aria-expanded="false">☰
+        </button>
+        <nav class="navegacion" id="navegacion" aria-label="Navegación principal">
+            <a href="#inicio">Inicio</a>
+            <a href="#catalogo">Libros</a>
+            <a href="#acerca">Acerca de</a>
+            <a href="#contacto">Contacto</a>
+            <a class="boton-nav" href="#catalogo">Mi colección</a>
+        </nav>
+    </div>
+</header>
+<main>
+<section class="bienvenida" id="inicio">
+    <div class="contenedor-ancho hero-grid">
+        <div class="hero-texto">
+            <div class="eyebrow hero-etiqueta">
+                ✦ Un mundo de conocimiento a tu alcance
+            </div>
+            <h1>
+                Una biblioteca.<br>
+                <em>Infinitos mundos.</em>
+            </h1>
+            <p>
+                Descubre, aprende y déjate inspirar por una colección de libros y 
+                recursos educativos seleccionados para la comunidad CONALEP.
+            </p>
+            <div class="hero-acciones">
+                <a class="boton-principal" href="#catalogo">Explorar libros 
+                    <span aria-hidden="true">→</span>
+                </a>
+                <a class="enlace-simple" href="#acerca">Conoce nuestra misión 
+                    <span aria-hidden="true">›</span>
+                </a>
+            </div>
+            <div class="estadisticas">
+                <div>
+                    <strong id="total-libros">4</strong><small>Libros digitales</small>
+                </div>
+                <div>
+                    <strong>24/7</strong><small>Acceso abierto</small>
+                </div>
+                <div>
+                    <strong id="total-categorias">4</strong>
+                    <small>Categorías</small>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img src="./recursos/imagen-biblioteca.jpg" 
+            alt="Interior de una biblioteca con estanterías de libros">
+            <div class="frase-imagen">“Leer es soñar con los ojos abiertos.”</div>
+            <div class="etiqueta-flotante">
+                <span>📚</span>
+                <div>
+                    <strong>Lectura sin límites</strong>
+                    <small>Desde cualquier dispositivo</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="seccion-catalogo" id="catalogo">
+    <div class="contenedor-ancho">
+        <div class="catalogo-encabezado">
+            <div>
+                <div class="eyebrow">— COLECCIÓN DIGITAL</div>
+                <h2>
+                    Encuentra tu próxima lectura
+                </h2>
+                <p>
+                    Explora recursos seleccionados para aprender, investigar y descubrir.
+                </p>
+            </div>
+            <div class="campo-busqueda">
+                <span aria-hidden="true">⌕</span>
+                <label class="solo-lectores" for="buscador">Buscar por título, autor o categoría</label>
+                <input type="search" id="buscador" placeholder="Buscar por título o autor...">
+            </div>
+        </div>
+        <div id="menu-categorias" 
+            class="menu-categorias" 
+            aria-label="Filtrar libros por categoría">
+        </div>
+        <div id="contenedor-libros" 
+            class="contenedor-libros">
+        </div>
+        <p id="mensaje-resultados" 
+            aria-live="polite" class="mensaje-resultados">
+        </p>
+        <section id="lector-libro"
+            class="lector-libro" hidden>
+            <div class="lector-cabecera">
+                <h2 id="titulo-lector">
+                    Lectura del libro
+                </h2>
+                <button type="button" 
+                    id="cerrar-lector" 
+                    class="boton-cerrar-lector">← Volver al catálogo
+                </button>
+            </div>
+            <iframe id="visor-pdf" 
+                title="Lector de documentos" 
+                loading="lazy">
+            </iframe>
+        </section>
+    </div>
+</section>
+<section class="acerca" id="acerca">
+    <div class="contenedor-ancho acerca-grid">
+        <div class="acerca-imagen">
+            <img src="./recursos/imagen-acerca.jpg" alt="Estantería de libros en una biblioteca">
+            <div class="cita-acerca">
+                ❞
+                <br><em>
+                    El conocimiento crece cuando se comparte.
+                </em>
+            </div>
+        </div>
+        <div class="acerca-texto">
+            <div class="eyebrow">
+                — ACERCA DE NOSOTROS
+            </div>
+            <h2>
+                Conectamos personas con ideas que transforman
+            </h2>
+            <p>
+                Nuestra biblioteca virtual es un espacio educativo
+            creado para facilitar el acceso al conocimiento y
+            promover el hábito de la lectura entre nuestra
+            comunidad escolar.
+        </p>
+
+        <p>
+            Aquí podrás encontrar libros y materiales de consulta
+            de diferentes áreas del conocimiento, disponibles
+            para su lectura y descarga.
+        </p>
+            <div class="tarjetas-valores">
+                <article>
+                    <span>01</span>
+                    <h3>
+                        Nuestra misión
+                    </h3>
+                    <p>
+                        Fomentar el aprendizaje autónomo, la investigación
+            y el intercambio de conocimientos mediante el uso
+            de recursos digitales.
+                    </p>
+                </article>
+                <article>
+                    <span>02</span>
+                    <h3>
+                        Nuestra visión
+                    </h3>
+                    <p>
+                        Ser un espacio digital de consulta que inspire la curiosidad, 
+                        la investigación y la lectura.
+                    </p>
+                </article>
+            </div>
+            <a class="enlace-simple enlace-acerca" href="#catalogo">Explora nuestros libros →</a>
+        </div>
+    </div>
+</section>
+</main>
+<footer class="pie-pagina" id="contacto">
+    <div class="contenedor-ancho">
+        <div class="footer-grid">
+            <div class="footer-marca">
+                <a class="marca marca-footer" href="#inicio">
+                    <img
+                    src="./recursos/logo.png"
+                    alt="Logotipo CONALEP"
+                    class="logo-conalep"
+                    >
+                    <span>
+                        <strong>CONALEP</strong><small>BIBLIOTECA VIRTUAL</small>
+                    </span>
+                </a>
+                <p>
+                    Un espacio digital para descubrir historias, 
+                    compartir conocimiento y cultivar la curiosidad.
+                </p>
+            </div>
+            <div>
+                <h3>
+                    Explora
+                </h3>
+                <a href="#inicio">Inicio</a>
+                <a href="#catalogo">Catálogo</a>
+                <a href="#acerca">Acerca de</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <div>
+                <h3>Recursos</h3>
+                <a href="#catalogo">Libros disponibles</a>
+                <a href="#catalogo">Categorías</a>
+                <a href="#acerca">Nuestra misión</a>
+            </div>
+            <div>
+                <h3>Biblioteca CONALEP</h3>
+                <p>Consulta materiales educativos y descarga recursos para seguir aprendiendo.</p>
+                <a href="#catalogo" class="footer-enlace">Explorar colección →</a>
+            </div>
+        </div>
+        <div class="footer-final">
+            <span>© 2026 Biblioteca Virtual CONALEP. Proyecto educativo.</span>
+            <span>Acceso digital al conocimiento</span>
+        </div>
+    </div>
+</footer>
+<div id="modal-libro" class="modal-fondo" hidden>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+        <button type="button" id="cerrar-modal" class="cerrar-modal" aria-label="Cerrar ventana">×</button>
+        <div class="modal-portada">
+            <img id="modal-imagen" alt="Portada del libro seleccionado">
+        </div>
+        <div class="modal-contenido">
+            <div id="modal-categoria" class="eyebrow">LIBRO</div>
+            <h2 id="modal-titulo"></h2>
+            <p id="modal-autor" class="modal-autor"></p>
+            <p id="modal-descripcion"></p>
+            <div id="modal-archivos" class="modal-archivos"></div>
+        </div>
+    </div>
+</div>
+<script src="./js/catalogo.js" defer></script>
+</body>
+</html>

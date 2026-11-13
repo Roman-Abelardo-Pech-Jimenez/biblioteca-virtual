@@ -1,3 +1,4 @@
+
 let libros = [];
 
 const contenedor = document.getElementById("contenedor-libros");
@@ -10,69 +11,89 @@ const visorPdf = document.getElementById("visor-pdf");
 
 const menuCategorias = document.getElementById("menu-categorias");
 
-let categoriaSeleccionada = "Todos";
+const modal = document.getElementById("modal-libro");
+const modalArchivos = document.getElementById("modal-archivos");
 
-// Carga los datos desde libros.json.
+let categoriaSeleccionada = "Todos";
+let ultimoFoco = null;
+
+// =====================================
+// NORMALIZAR TEXTO PARA BUSQUEDA
+// =====================================
+
+function normalizarTexto(valor) {
+    return String(valor ?? "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+}
+
+// =====================================
+// CARGAR LIBROS DESDE JSON
+// =====================================
+
 async function cargarLibros() {
     try {
-        const respuesta = await fetch("datos/libros.json");
+        const respuesta = await fetch("./datos/libros.json");
 
         if (!respuesta.ok) {
             throw new Error("No se pudo cargar el catálogo.");
         }
 
-        libros = await respuesta.json();
+        const datos = await respuesta.json();
+
+        if (!Array.isArray(datos)) {
+            throw new Error("El catálogo debe ser un arreglo.");
+        }
+
+        libros = datos;
+
         generarCategorias();
         aplicarFiltros();
 
+        const totalLibros = document.getElementById("total-libros");
+        const totalCategorias = document.getElementById("total-categorias");
+
+        if (totalLibros) {
+            totalLibros.textContent = libros.length;
+        }
+
+        if (totalCategorias) {
+            totalCategorias.textContent = new Set(
+                libros.map(libro => libro.categoria).filter(Boolean)
+            ).size;
+        }
 
     } catch (error) {
         mensajeResultados.textContent =
-            "No se pudo cargar el catálogo. " +
-            "Abre la biblioteca mediante un servidor local.";
-        console.error(error);
+            "No se pudo cargar el catálogo. Verifica libros.json y Live Server.";
+
+        console.error("Error al cargar libros:", error);
     }
 }
+
+// =====================================
+// GENERAR CATEGORIAS
+// =====================================
+
 function generarCategorias() {
+    const categoriasUnicas = [
+        ...new Set(
+            libros.map(libro => libro.categoria).filter(Boolean)
+        )
+    ];
 
-    // Obtener las categorías de todos los libros.
-    const categorias = libros.map(function(libro) {
-        return libro.categoria;
-    });
-
-    // Eliminar las categorías repetidas.
-    const categoriasUnicas = [...new Set(categorias)];
-
-    // Limpiar el menú antes de generar los botones.
     menuCategorias.replaceChildren();
 
-    // Crear la opción para mostrar todos los libros.
-    const botonTodos = document.createElement("button");
+    const categorias = ["Todos", ...categoriasUnicas];
 
-    botonTodos.type = "button";
-    botonTodos.textContent = "Todos";
-    botonTodos.classList.add("boton-categoria");
-
-    if (categoriaSeleccionada === "Todos") {
-        botonTodos.classList.add("activa");
-    }
-
-    botonTodos.addEventListener("click", function() {
-        categoriaSeleccionada = "Todos";
-        buscador.value = "";
-        aplicarFiltros();
-    });
-
-    menuCategorias.append(botonTodos);
-
-    // Crear un botón para cada categoría.
-    categoriasUnicas.forEach(function(categoria) {
-
+    categorias.forEach(function(categoria) {
         const boton = document.createElement("button");
 
         boton.type = "button";
         boton.textContent = categoria;
-        boton.classList.add("boton-categoria");
+        boton.className = "boton-categoria";
 
         if (categoriaSeleccionada === categoria) {
             boton.classList.add("activa");
@@ -80,25 +101,35 @@ function generarCategorias() {
 
         boton.addEventListener("click", function() {
             categoriaSeleccionada = categoria;
-            buscador.value = "";
             aplicarFiltros();
         });
 
         menuCategorias.append(boton);
-
     });
 }
 
-function aplicarFiltros() {
+// =====================================
+// BUSQUEDA Y FILTROS
+// =====================================
 
-    const texto = buscador.value.toLowerCase().trim();
+function aplicarFiltros() {
+    const texto = normalizarTexto(buscador.value);
 
     const resultados = libros.filter(function(libro) {
 
-        const coincideTexto =
-            libro.titulo.toLowerCase().includes(texto) ||
-            libro.autor.toLowerCase().includes(texto) ||
-            libro.categoria.toLowerCase().includes(texto);
+        const informacion = [
+            libro.titulo,
+            libro.autor,
+            libro.ua,
+            libro.categoria,
+            libro.descripcion
+        ];
+
+        const contenido = normalizarTexto(
+            informacion.join(" ")
+        );
+
+        const coincideTexto = contenido.includes(texto);
 
         const coincideCategoria =
             categoriaSeleccionada === "Todos" ||
@@ -108,116 +139,77 @@ function aplicarFiltros() {
     });
 
     mostrarLibros(resultados);
-    generarCategorias();
+    actualizarCategorias();
 }
 
+// =====================================
+// ACTUALIZAR BOTONES DE CATEGORIAS
+// =====================================
 
-// Genera las tarjetas.
+function actualizarCategorias() {
+    const botones = menuCategorias.querySelectorAll("button");
+
+    botones.forEach(function(boton) {
+        boton.classList.toggle(
+            "activa",
+            boton.textContent === categoriaSeleccionada
+        );
+    });
+}
+
+// =====================================
+// MOSTRAR TARJETAS DE LIBROS
+// =====================================
+
 function mostrarLibros(listaLibros) {
     contenedor.replaceChildren();
 
     listaLibros.forEach(function(libro) {
+
         const tarjeta = document.createElement("article");
-        tarjeta.classList.add("tarjeta-libro");
+        tarjeta.className = "tarjeta-libro";
 
         const imagen = document.createElement("img");
-        imagen.classList.add("imagen-portada");
+        imagen.className = "imagen-portada";
         imagen.src = libro.portada;
         imagen.alt = "Portada de " + libro.titulo;
+        imagen.loading = "lazy";
 
         const informacion = document.createElement("div");
-        informacion.classList.add("informacion-libro");
+        informacion.className = "informacion-libro";
+
+        const categoria = document.createElement("span");
+        categoria.className = "categoria-etiqueta";
+        categoria.textContent = libro.categoria || "";
 
         const titulo = document.createElement("h3");
-        titulo.textContent = libro.titulo;
+        titulo.textContent = libro.titulo || "Sin título";
 
         const autor = document.createElement("p");
-        autor.textContent = "Autor: " + libro.autor;
+        autor.className = "autor-libro";
+        autor.textContent = libro.autor || "Autor no disponible";
 
-        const categoria = document.createElement("p");
-        categoria.textContent = "Categoría: " + libro.categoria;
+        const au = document.createElement("p");
+        au.className = "autor-libro";
+        au.textContent = libro.ua || "";
 
-        const descripcion = document.createElement("p");
-        descripcion.classList.add("descripcion-libro");
-        descripcion.textContent = libro.descripcion || "Sin descripción disponible.";
+        const boton = document.createElement("button");
+        boton.className = "ver-libro";
+        boton.type = "button";
+        boton.textContent = "Ver libro →";
 
-        informacion.append(titulo, autor, categoria, descripcion);
+        boton.addEventListener("click", function() {
+            abrirModal(libro);
+        });
 
-        tarjeta.append(imagen, informacion);
+        informacion.append(
+            categoria,
+            titulo,
+            autor,
+            boton
+        );
 
-        // Crear los botones solo si el libro tiene un archivo.
-        if (libro.archivos && libro.archivos.length > 0) {
-
-            libro.archivos.forEach(function(archivo) {
-                const grupoArchivo = document.createElement("div");
-                grupoArchivo.classList.add("grupo-archivo");
-
-                // Crear el botón de lectura.
-                const botonLeer = document.createElement("button");
-                botonLeer.type = "button";
-                botonLeer.textContent = "Leer " + archivo.tipo;
-                botonLeer.classList.add("boton-libro");
-
-                // Crear el botón de descarga.
-                const botonDescargar = document.createElement("a");
-                botonDescargar.textContent = "Descargar " + archivo.tipo;
-                botonDescargar.href = archivo.ruta;
-                botonDescargar.download = "";
-                botonDescargar.classList.add("boton-libro");
-
-                // Acción del botón de lectura.
-                botonLeer.addEventListener("click", function() {
-
-                    const tipo = archivo.tipo.toUpperCase();
-
-                    if (tipo === "PDF") {
-
-                        // Abrir el PDF directamente.
-                        visorPdf.src = archivo.ruta;
-
-                    } else if (tipo === "DOCX" || tipo === "PPTX") {
-
-                        // Obtener la dirección completa del documento.
-                        const urlDocumento = new URL(
-                            archivo.ruta,
-                            window.location.href
-                        ).href;
-
-                        // Construir la dirección del visor de Microsoft.
-                        const urlVisor =
-                            "https://view.officeapps.live.com/op/embed.aspx?src=" +
-                            encodeURIComponent(urlDocumento);
-
-                        visorPdf.src = urlVisor;
-
-                    } else {
-
-                        alert("Este formato todavía no tiene un visor disponible.");
-                        return;
-
-                    }
-
-                    // Mostrar el documento seleccionado.
-                    tituloLector.textContent = "Leyendo: " + libro.titulo;
-
-                    lectorLibro.hidden = false;
-                    contenedor.hidden = true;
-
-                    lectorLibro.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-
-                });
-
-                grupoArchivo.append(botonLeer, botonDescargar);
-                tarjeta.append(grupoArchivo);
-
-
-            });
-        }
-
-
+        tarjeta.append(imagen, informacion, au);
         contenedor.append(tarjeta);
     });
 
@@ -227,30 +219,207 @@ function mostrarLibros(listaLibros) {
             : "Libros encontrados: " + listaLibros.length;
 }
 
+// =====================================
+// ABRIR VENTANA DEL LIBRO
+// =====================================
 
-// Busca por título, autor o categoría.
-function buscarLibros() {
-    const texto = buscador.value.toLowerCase().trim();
+function abrirModal(libro) {
+    ultimoFoco = document.activeElement;
 
-    const resultados = libros.filter(function(libro) {
-        return (
-            libro.titulo.toLowerCase().includes(texto) ||
-            libro.autor.toLowerCase().includes(texto) ||
-            libro.categoria.toLowerCase().includes(texto)
+    const imagen = document.getElementById("modal-imagen");
+
+    imagen.src = libro.portada;
+    imagen.alt = "Portada de " + libro.titulo;
+
+    document.getElementById("modal-categoria").textContent =
+        libro.categoria || "";
+
+    document.getElementById("modal-titulo").textContent =
+        libro.titulo || "";
+
+    document.getElementById("modal-autor").textContent =
+        "por " + (libro.autor || "Autor no disponible");
+
+    document.getElementById("modal-descripcion").textContent =
+        libro.descripcion || "Sin descripción disponible.";
+
+    modalArchivos.replaceChildren();
+
+    (libro.archivos || []).forEach(function(archivo) {
+
+        // BOTON LEER
+        const botonLeer = document.createElement("button");
+
+        botonLeer.type = "button";
+        botonLeer.className = "boton-libro boton-leer";
+        botonLeer.textContent = "Leer " + archivo.tipo + " →";
+
+        botonLeer.addEventListener("click", function() {
+            abrirDocumento(libro, archivo);
+        });
+
+        // BOTON DESCARGAR
+        const descargar = document.createElement("a");
+
+        descargar.className = "boton-libro boton-descargar";
+        descargar.textContent = "Descargar " + archivo.tipo;
+        descargar.href = archivo.ruta;
+        descargar.download = "";
+
+        modalArchivos.append(botonLeer, descargar);
+    });
+
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+
+    document.getElementById("cerrar-modal").focus();
+}
+
+// =====================================
+// CERRAR VENTANA DEL LIBRO
+// =====================================
+
+function cerrarModal() {
+    modal.hidden = true;
+    document.body.style.overflow = "";
+
+    if (ultimoFoco && ultimoFoco.isConnected) {
+        ultimoFoco.focus();
+    }
+}
+
+document.getElementById("cerrar-modal")
+    .addEventListener("click", cerrarModal);
+
+modal.addEventListener("click", function(event) {
+    if (event.target === modal) {
+        cerrarModal();
+    }
+});
+
+// Cerrar con Escape y controlar el foco
+document.addEventListener("keydown", function(event) {
+
+    if (modal.hidden) return;
+
+    if (event.key === "Escape") {
+        cerrarModal();
+        return;
+    }
+
+    if (event.key === "Tab") {
+        const elementos = [
+            ...modal.querySelectorAll("button, a[href]")
+        ];
+
+        if (elementos.length === 0) return;
+
+        const primero = elementos[0];
+        const ultimo = elementos[elementos.length - 1];
+
+        if (event.shiftKey && document.activeElement === primero) {
+            event.preventDefault();
+            ultimo.focus();
+        } else if (
+            !event.shiftKey &&
+            document.activeElement === ultimo
+        ) {
+            event.preventDefault();
+            primero.focus();
+        }
+    }
+});
+
+// =====================================
+// ABRIR DOCUMENTOS
+// =====================================
+
+function abrirDocumento(libro, archivo) {
+    const tipo = String(archivo.tipo || "").toUpperCase();
+
+    if (tipo === "PDF") {
+        visorPdf.src = archivo.ruta;
+
+    } else if (tipo === "DOCX" || tipo === "PPTX") {
+
+        const urlDocumento = new URL(
+            archivo.ruta,
+            window.location.href
+        ).href;
+
+        visorPdf.src =
+            "https://view.officeapps.live.com/op/embed.aspx?src=" +
+            encodeURIComponent(urlDocumento);
+
+    } else {
+        alert("Este formato todavía no tiene un visor disponible.");
+        return;
+    }
+
+    cerrarModal();
+
+    tituloLector.textContent =
+        "Leyendo: " + libro.titulo + " (" + archivo.tipo + ")";
+
+    lectorLibro.hidden = false;
+    contenedor.hidden = true;
+    menuCategorias.hidden = true;
+
+    lectorLibro.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+// =====================================
+// CERRAR LECTOR
+// =====================================
+
+document.getElementById("cerrar-lector")
+    .addEventListener("click", function() {
+
+        lectorLibro.hidden = true;
+        contenedor.hidden = false;
+        menuCategorias.hidden = false;
+
+        visorPdf.src = "about:blank";
+    });
+
+// =====================================
+// BUSQUEDA EN TIEMPO REAL
+// =====================================
+
+buscador.addEventListener("input", aplicarFiltros);
+
+// =====================================
+// MENU MOVIL
+// =====================================
+
+const menuMovil = document.getElementById("menu-movil");
+const navegacion = document.getElementById("navegacion");
+
+if (menuMovil && navegacion) {
+
+    menuMovil.addEventListener("click", function() {
+        const abierta = navegacion.classList.toggle("abierta");
+
+        menuMovil.setAttribute(
+            "aria-expanded",
+            String(abierta)
         );
     });
 
-    mostrarLibros(resultados);
+    navegacion.querySelectorAll("a").forEach(function(enlace) {
+
+        enlace.addEventListener("click", function() {
+            navegacion.classList.remove("abierta");
+            menuMovil.setAttribute("aria-expanded", "false");
+        });
+
+    });
 }
 
-buscador.addEventListener("input", aplicarFiltros);
-document.getElementById("cerrar-lector").addEventListener("click", function() {
-    lectorLibro.hidden = true;
-    contenedor.hidden = false;
 
-    // Liberar el visor cuando se cierre.
-    visorPdf.src = "about:blank";
-});
+// INICIAR BIBLIOTECA
 
-// Inicia la carga del catálogo.
 cargarLibros();

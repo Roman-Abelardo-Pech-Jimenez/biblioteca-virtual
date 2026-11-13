@@ -1,10 +1,11 @@
 [
    {
-        "titulo": "Álgebra básica",
+        "titulo": "Crisis de la monarquia española y su relacion con el inicio de la insurgencia",
         "autor": "Autor de ejemplo",
-        "categoria": "Matemáticas",
-        "descripcion": "Material introductorio para comprender las operaciones algebraicas, expresiones y ecuaciones básicas.",
-        "portada": "recursos/portadas/algebra_básica.jpg",
+        "ua":"Formacion historica del Mexico independiente",
+        "categoria": "Conciencia histórica II",
+        "descripcion": "Descubre cómo la crisis de la monarquía española de 1808 transformó el destino de Nueva España. A través de este libro, conocerás los acontecimientos políticos, los conflictos entre criollos y peninsulares y las ideas que dieron origen al movimiento insurgente de 1810, marcando el comienzo del camino hacia la Independencia de México.",
+        "portada": "recursos/portadas/crisisMonarquia.jpg",
         "archivos": [
             {
                 "tipo": "PDF",
@@ -21,11 +22,12 @@
         ]
     },
     {
-        "titulo": "Introducción a la informática",
+        "titulo": "La Ilustración y las revoluciones atlánticas como antecedentes ideológicos",
         "autor": "Autor de ejemplo",
-        "categoria": "Informática",
-        "descripcion": "Material introductorio para comprender la informática.",
-        "portada": "recursos/portadas/informatica.jpg",
+        "ua":"Formacion historica del Mexico independiente",
+        "categoria": "Conciencia histórica II",
+        "descripcion": "Descubre cómo las ideas de libertad, igualdad y soberanía popular transformaron el pensamiento político del mundo. A través de este libro, conocerás la influencia de la Ilustración y las revoluciones de Estados Unidos, Francia y Haití, así como su importancia en el cuestionamiento del dominio colonial y el surgimiento del movimiento de Independencia de México.",
+        "portada": "recursos/portadas/ilustracionRevoluciones.jpg",
         "archivos": [
             {
                 "tipo": "PDF",
@@ -42,11 +44,12 @@
         ]
     },
     {
-        "titulo": "El mundo de la lectura",
+        "titulo": "Desigualdad social y exclusión política en la Nueva España",
         "autor": "Autor de ejemplo",
-        "categoria": "Literatura",
-        "descripcion": "Material introductorio para comprender la literatura.",
-        "portada": "recursos/portadas/literatura.jpg",
+        "ua":"Formacion historica del Mexico independiente",
+        "categoria": "Conciencia histórica II",
+        "descripcion": "Conoce cómo el sistema de castas, los privilegios sociales y la exclusión política generaron desigualdad en la Nueva España, provocando conflictos que contribuyeron al inicio de la Independencia de México.",
+        "portada": "recursos/portadas/desigualdasocial.jpg",
         "archivos": [
             {
                 "tipo": "PDF",
